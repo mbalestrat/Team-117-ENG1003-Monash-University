@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Weather</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+        <script src="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="css/weatherapp.css" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
+        <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
+    </head>
+    
+    <body>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+          <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+              <span class="mdl-layout-title" id="headerBarTitle">Locations</span>
+              <div class="mdl-layout-spacer"></div>
+              <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+          </header>
+            
+          <main class="mdl-layout__content">
+            <!--   Main page content here:   -->  
+
+            <!--   Sample locations list.   
+                This is included to demonstrate navigation.  You will likely want
+                to use JavaScript to generate a list of similar structure.
+            -->  
+            <ul class="mdl-list" id="locationList">
+              <li class="mdl-list__item mdl-list__item--two-line" onclick="viewLocation(0);">
+                <span class="mdl-list__item-primary-content">
+                  <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
+                  <span>Location A</span>
+                  <span id="weather0" class="mdl-list__item-sub-title">Weather summary</span>
+                </span>
+              </li>
+              <li class="mdl-list__item mdl-list__item--two-line" onclick="viewLocation(1);">
+                <span class="mdl-list__item-primary-content">
+                  <img class="mdl-list__item-icon" id="icon1" src="images/loading.png" class="list-avatar" />
+                  <span>Location B</span>
+                  <span id="weather1" class="mdl-list__item-sub-title">Weather summary</span>
+                </span>
+              </li>
+            </ul>
+            <!--   End sample locations list.   -->  
+
+          </main>
+        </div>
+        
+        <!--   JavaScript files:   -->
+        <script src="js/locationWeatherCache.js"></script>
+        <script src="js/mainPage.js"></script>
+    </body>
+</html>
