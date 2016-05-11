@@ -44,14 +44,22 @@ function LocationWeatherCache()
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) {
+        return locations[index]; // Change made by Miel, 11/5/2016
     };
 
     // Given a latitude, longitude and nickname, this method saves a 
     // new location into the cache.  It will have an empty 'forecasts'
     // property.  Returns the index of the added location.
     //
+    
+    
     this.addLocation = function(latitude, longitude, nickname)
     {
+        // Create the newLoc object
+        newLoc = {nick: nickname, lat: latitude, long: longitude};
+        
+        // Push the new location to the array
+        locations.push(newLoc);
     }
 
     // Removes the saved location at the given index.
