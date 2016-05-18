@@ -11,64 +11,6 @@ if (locationIndex !== null)
     document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
 }
 
-
-
-//map
-var map;
-function initMap()
-{
- map = nwe google.maps.Map(document.getElementById('map'),   
-                         {
-                              center:{lat:-34.397,lng:150.644}
-                              zoom: 8;
-                          });
-}
-
-
-
-//The date that dispalyedd weather applies to
-// Returns a date in the format "YYYY-MM-DD".
-
-Date.prototype.simpleDateString = function() {
-    function pad(value)
-    {
-        return ("0" + value).slice(-2);
-    }
-
-    var dateString = this.getFullYear() + "-" + 
-            pad(this.getMonth() + 1, 2) + '-' + 
-            pad(this.getDate(), 2);
-    
-    return dateString;
-}
-
-var outputAreaRef = document.getElementById("mdl-cell");
-var output = "";
-
-var currentDate = new Date();
-
-var dateStr = currentDate.simpleDateString()
-
-outputAreaRef.innerHTML = dateStr;
-
-//time zone errors
-Date.prototype.forcastDateString = function(){
-    
-    return this.simpleDateString() + "T12:00:00"
-}
-
-//Adate selection slider
-//30 positions
-//set to the far right
-
-
-
-
-
-
-
-//A summary of the weather
-/*
 var APIID = "mbal38@student.monash.edu";
 var temp;
 var loc;
@@ -107,5 +49,3 @@ window.onload = function ()
      
     update(weather);
 }
-*/
-//Remove location Button
