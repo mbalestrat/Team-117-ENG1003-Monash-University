@@ -22,6 +22,9 @@ Date.prototype.forecastDateString = function() {
 
 
 // Code for LocationWeatherCache class and other shared code.
+// Global variable to count the number of removed items and offset the index of locations array.
+var spliceCount;
+var LocationWeatherCache;
 
 // Prefix to use for Local Storage.  You may change this.
 var APP_PREFIX = "weatherApp";
@@ -56,30 +59,51 @@ function LocationWeatherCache()
     this.addLocation = function(latitude, longitude, nickname)
     {
         // Create the newLoc object
-        newLoc = {nick: nickname, lat: latitude, long: longitude};
+        var newLoc = 
+            {
+             nick: nickname, 
+             lat: latitude, 
+             long: longitude
+             {lat}{long}{date}: latitude, longitude, 
+            };
         
         // Push the new location to the array
         locations.push(newLoc);
+        index = locations.length - (spliceCount + 1);
+        
+        // Save to cache
+        
+        localStorage.setItem(APP_PREFIX + index, JSON.stringify(newLoc));
+        
+        // Return index of added location
+        return index;
     }
 
     // Removes the saved location at the given index.
     // 
     this.removeLocationAtIndex = function(index)
     {
+        localStorage.removeItem(APP_PREFIX + index);
+        locations.splice(index, 1);
+        spliceCount++;
     }
 
     // This method is used by JSON.stringify() to serialise this class.
     // Note that the callbacks attribute is only meaningful while there 
     // are active web service requests and so doesn't need to be saved.
     //
-    this.toJSON = function() {
+    this.toJSON = function() 
+    {
+        
     };
 
     // Given a public-data-only version of the class (such as from
     // local storage), this method will initialise the current
     // instance to match that version.
     //
-    this.initialiseFromPDO = function(locationWeatherCachePDO) {
+    this.initialiseFromPDO = function(locationWeatherCachePDO) 
+    {
+    
     };
 
     // Request weather for the location at the given index for the
@@ -92,7 +116,8 @@ function LocationWeatherCache()
     // will be the index of the location and the second will be the 
     // weather object for that location.
     // 
-    this.getWeatherAtIndexForDate = function(index, date, callback) {
+    this.getWeatherAtIndexForDate = function(index, date, callback) 
+    {
     };
     
     // This is a callback function passed to forecast.io API calls.
@@ -101,7 +126,8 @@ function LocationWeatherCache()
     // This should invoke the recorded callback function for that
     // weather request.
     //
-    this.weatherResponse = function(response) {
+    this.weatherResponse = function(response) 
+    {
     };
 
     // Private methods:
@@ -120,6 +146,12 @@ function LocationWeatherCache()
 //
 function loadLocations()
 {
+    // Create a single LocationWeatherCache class instance inside global variable 'LocationWeatherCache'.
+    
+    LocationWeatherCache = new LocationWeatherCache();
+    
+    // Check local storage for existing cache object
+
 }
 
 // Save the singleton locationWeatherCache to Local Storage.
@@ -127,4 +159,8 @@ function loadLocations()
 function saveLocations()
 {
 }
+
+// Call loadLocations function so that stored data is available on all pages.
+
+loadLocations();
 
