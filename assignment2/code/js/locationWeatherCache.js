@@ -63,8 +63,8 @@ function LocationWeatherCache()
             {
              nick: nickname, 
              lat: latitude, 
-             long: longitude
-             {lat}{long}{date}: latitude, longitude, 
+             long: longitude,
+             {lat}{long}{date}: latitude, longitude 
             };
         
         // Push the new location to the array
