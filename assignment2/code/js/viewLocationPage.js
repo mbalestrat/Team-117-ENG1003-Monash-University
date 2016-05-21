@@ -3,6 +3,8 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+var APP_PREFIX="key1";
+
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
 if (locationIndex !== null)
 {
@@ -11,7 +13,48 @@ if (locationIndex !== null)
     document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
 }
 
-var APIID = "mbal38@student.monash.edu";
+
+//The date that dispalyedd weather applies to
+// Returns a date in the format "YYYY-MM-DD".
+
+Date.prototype.simpleDateString = function() {
+    function pad(value)
+    {
+        return ("0" + value).slice(-2);
+    }
+
+    var dateString = this.getFullYear() + "-" + 
+            pad(this.getMonth() + 1, 2) + '-' + 
+            pad(this.getDate(), 2);
+    
+    return dateString;
+}
+var outputAreaRef = document.getElementById("locDate");
+var output = "";
+
+var currentDate = new Date();
+
+var dateStr = currentDate.simpleDateString()
+
+outputAreaRef.innerHTML = dateStr;
+
+//time zone errors
+Date.prototype.forcastDateString = function(){
+    
+    return this.simpleDateString() + "T12:00:00"
+}
+
+//Adate selection slider
+//30 positions
+//set to the far right
+
+
+
+
+
+//A summary of the weather
+/*
+var APIID = "760b8e8a0a5f4992d672bcb53a07998e";
 var temp;
 var loc;
 var icon;
@@ -49,3 +92,5 @@ window.onload = function ()
      
     update(weather);
 }
+*/
+//A “Remove this location” button
