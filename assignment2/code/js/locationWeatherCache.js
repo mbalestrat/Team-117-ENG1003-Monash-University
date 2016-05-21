@@ -218,18 +218,19 @@ function LocationWeatherCache()
                 if (params.length == 0)
                 {
                     // First parameter starts with '?'
-                    params += "?";
+                    params += "/";
                 }
                 else
                 {
                     // Subsequent parameter separated by '&'
-                    params += "&";
+                    params += ",";
                 }
 
-                var encodedKey = encodeURIComponent(key);
+                //var encodedKey = encodeURIComponent(key);
                 var encodedValue = encodeURIComponent(data[key]);
+                // encodedKey + "=" +
 
-                params += encodedKey + "=" + encodedValue;
+                params += encodedValue;
              }
         }
         var script = document.createElement('script');

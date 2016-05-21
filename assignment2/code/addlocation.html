@@ -12,6 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
         <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
+        <script src="js/locationWeatherCache.js"></script>
     </head>
     
     <body>
@@ -29,19 +30,16 @@
               <div class="mdl-cell">
                 <!--   Main page content here:   -->  
                 <form>
-                    Location:<br>
-                    <input type = "text" name = "location"><br>
                     Nickname: <br>
-                    <input type = "text" name = "nickname"><br><br>
+                    <input type = "text" id= "nickname"><br><br>
+                    Location:<br>
+                    <input type = "text" id= "location"><br>
                   </form>
-                  <button type = "button" name = 'add'>Add Location</button>
+                  <button type = "button" name = 'add' onclick = "javascript:LocationWeatherCache.addLocation(0,45.00,nickname.value);">Add Location</button>
               </div>
             </div>
           </main>    
         </div>
-
-        <!--   JavaScript files:   -->
-        <script src="js/locationWeatherCache.js"></script>
-        <script src="js/addlocationPage.js"></script>
+        
     </body>
 </html>
