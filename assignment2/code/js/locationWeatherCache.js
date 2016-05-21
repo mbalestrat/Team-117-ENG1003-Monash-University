@@ -47,7 +47,7 @@ function LocationWeatherCache()
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) {
-        return locations[index]; // Change made by Miel, 11/5/2016
+        return locations[index]; 
     };
 
     // Given a latitude, longitude and nickname, this method saves a 
@@ -78,7 +78,7 @@ function LocationWeatherCache()
         
         // Return index of added location
         return index;
-    }
+    };
 
     // Removes the saved location at the given index.
     // 
@@ -87,7 +87,7 @@ function LocationWeatherCache()
         localStorage.removeItem(APP_PREFIX + index);
         locations.splice(index, 1);
         spliceCount++;
-    }
+    };
 
     // This method is used by JSON.stringify() to serialise this class.
     // Note that the callbacks attribute is only meaningful while there 
@@ -95,7 +95,11 @@ function LocationWeatherCache()
     //
     this.toJSON = function() 
     {
-        
+        var locationWeatherPDO = {
+			locations: locations,
+			callbacks: callbacks
+		};
+		return locationWeatherPDO;
     };
     
     //Sets private attributes for a class instance. Lets LocalWeather be recreated on app relaunch.
