@@ -48,6 +48,7 @@ function LocationWeatherCache()
 
     var locations = [];
     var callbacks = {};
+    var APIkey = "760b8e8a0a5f4992d672bcb53a07998e";
 
     // Public methods:
     
@@ -76,15 +77,18 @@ function LocationWeatherCache()
     {
         // Create the newLoc object
         var newLoc = 
-            {
-             nick: nickname, 
+            { 
              lat: latitude, 
-             long: longitude
-             forecasts: {}
+             long: longitude,
             };
             
         // Get weather for this location from Forecast.io
-        newLoc.forecasts[latitude,longitude,date] = this.weatherResponse();
+        var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
+        
+        newLoc.nick = nickname;
+        newLoc.forecasts = {};
+        
+        newLoc.forecasts["latitude,longitude,date"] = lookUp;
         
         // Push the new location to the array
         locations.push(newLoc);
@@ -112,13 +116,14 @@ function LocationWeatherCache()
     // Note that the callbacks attribute is only meaningful while there 
     // are active web service requests and so doesn't need to be saved.
     //
-    this.toJSON = function() 
+    this.toJSON = function(locations, callbacks) 
     {
         var locationWeatherPDO = 
-        {
-			locations: locations,
-			callbacks: callbacks
-		};
+            {
+            locations: locations,
+            callbacks: callbacks
+            };
+        
 		return locationWeatherPDO;
     };
     
@@ -175,11 +180,11 @@ function LocationWeatherCache()
         var index = getIndexByLatLng(response.lat,response.lng);
         locations[index].forecasts[key] = WObj;
         
-        //JSONPrequest
-        jsonpRequest("https://api.forecast.io/forecast/", index);
         
         saveLocations(locations);
+        document.body.appendChild(script);
     };
+    
     //------------------------------------------------------------------
     // Private methods:
     
@@ -190,16 +195,47 @@ function LocationWeatherCache()
     //
     function getIndexByLatLng(lat,lng)
     {
-    for(var i=0; i<locations.length; i++)
-    {
-        if(locations[i].lat === lat && locations[i].lng === lng)
+        for(var i=0; i<locations.length; i++)
         {
-            return(i);
+            if(locations[i].lat === lat && locations[i].lng === lng)
+            {
+                return(i);
+            }
+        }
+            return(-1);
         }
     }
-        return(-1);
+
+    function jsonpRequest(url, data)
+    {
+        // Build URL parameters from data object.
+        var params = "";
+        // For each key in data object...
+        for (var key in data)
+        {
+            if (data.hasOwnProperty(key))
+            {
+                if (params.length == 0)
+                {
+                    // First parameter starts with '?'
+                    params += "?";
+                }
+                else
+                {
+                    // Subsequent parameter separated by '&'
+                    params += "&";
+                }
+
+                var encodedKey = encodeURIComponent(key);
+                var encodedValue = encodeURIComponent(data[key]);
+
+                params += encodedKey + "=" + encodedValue;
+             }
+        }
+        var script = document.createElement('script');
+        script.src = url + params;
+        document.body.appendChild(script);
     }
-}
 
 //================================================================
 // Restore the singleton locationWeatherCache from Local Storage.
