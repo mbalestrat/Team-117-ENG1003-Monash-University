@@ -2,6 +2,8 @@ html, body {
     height: 100%; 
     margin: 0; 
     padding: 0; 
+    background: url(your-image.jpg) top right no-repeat; 
+    background-attachment:fixed;
 }
 #map { 
     height: calc(100vh - 300px); 
