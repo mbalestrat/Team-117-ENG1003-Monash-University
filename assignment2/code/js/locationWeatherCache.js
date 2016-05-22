@@ -95,7 +95,8 @@ function LocationWeatherCache()
         index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        localStorage.setItem(APP_PREFIX + index, JSON.stringify(newLoc));
+        JSONnewLoc = toJSON(newLoc);
+        localStorage.setItem(APP_PREFIX + index, JSON.stringify(JSONnewLoc));
         
         // Return index of added location
         return index;
@@ -120,8 +121,8 @@ function LocationWeatherCache()
     {
         var locationWeatherPDO = 
             {
-            locations: locations,
-            callbacks: callbacks
+                locations: locations,
+                callbacks: callbacks
             };
         
 		return locationWeatherPDO;

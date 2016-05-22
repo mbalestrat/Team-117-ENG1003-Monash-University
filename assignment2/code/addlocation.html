@@ -13,9 +13,10 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
     <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places">
     <script src="js/locationWeatherCache.js">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initAutocomplete"
+         async defer></script>
     </script>
 
 </head>
@@ -123,6 +124,8 @@
                   position: place.geometry.location
                 }
             ));
+              
+            LocationWeatherCache.addLocation(markers);
                 
             if (place.geometry.viewport) 
             {
@@ -135,11 +138,11 @@
                 
           map.fitBounds(bounds);
         });
+            //return markers.pop();
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initAutocomplete"
-         async defer></script>
+  
                     </div>     
                 </div>
             </div>
