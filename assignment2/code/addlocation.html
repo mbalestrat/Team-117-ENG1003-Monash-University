@@ -1,45 +1,117 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Weather</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.indigo-pink.min.css">
-        <script src="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js"></script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <link rel="stylesheet" href="css/weatherapp.css" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
-        <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
-        <script src="js/locationWeatherCache.js"></script>
-    </head>
-    
-    <body>
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-          <header class="mdl-layout__header">
-              <button onclick="location.href = 'index.html';" class="mdl-layout-icon mdl-button mdl-js-button mdl-button--icon"> 
+
+<head>
+    <title>Weather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="css/weatherapp.css" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" sizes="196x196" href="images/icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+    <script src="js/locationWeatherCache.js"></script>
+
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <button onclick="location.href = 'index.html';" class="mdl-layout-icon mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">arrow_back</i>
-              </button>
+            </button>
             <div class="mdl-layout__header-row">
-              <span class="mdl-layout-title" id="headerBarTitle">Add Location</span>
+                <span class="mdl-layout-title" id="headerBarTitle">Add Location</span>
             </div>
-          </header>
-          <main class="mdl-layout__content">
+        </header>
+        <main class="mdl-layout__content">
             <div class="content-grid mdl-grid">
-              <div class="mdl-cell">
-                <!--   Main page content here:   -->  
-                <form>
-                    Nickname: <br>
-                    <input type = "text" id= "nickname"><br><br>
-                    Location:<br>
-                    <input type = "text" id= "location"><br>
-                  </form>
-                  <button type = "button" name = 'add' onclick = "javascript:LocationWeatherCache.addLocation(0,45.00,nickname.value);">Add Location</button>
-              </div>
+                <div class="mdl-cell">
+                    <!--   Main page content here:   -->
+
+
+                    <!--<form name="addLocation" method="POST" action="geocodingSandbox.html" commandName="location" onsubmit="changeAdress()">-->
+                    <div align = "center">   
+                        <br>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="nickname">
+                            <label class="mdl-textfield__label" for="nickname">Name Your Location...</label>
+                        </div>
+                        <br>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="address">
+                            <label class="mdl-textfield__label" for="address">Where Is It?</label>
+                        </div>
+                        
+                        <br>
+                        <br>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submit" onclick="alert()">
+                          Get the Weather!
+                        </button>
+
+                    <br>
+                    <br>
+                    <div id="map"></div>
+                    </div> 
+                    <script>
+                        function initMap() 
+                        {
+                            var map = new google.maps.Map(document.getElementById('map'), 
+                                {
+                                zoom: 8,
+                                center: {
+                                lat: -34.397,
+                                lng: 150.644
+                                }
+                            });
+                            
+                            var geocoder = new google.maps.Geocoder();
+
+                            document.getElementById('submit').addEventListener('click', function () 
+                            {
+                                geocodeAddress(geocoder, map);
+                            });
+                        }
+
+                        function geocodeAddress(geocoder, resultsMap) 
+                        {
+                            var address = document.getElementById('address').value;
+                            geocoder.geocode(
+                                {
+                                'address': address
+                                }, 
+                                function (results, status) 
+                                {
+                                if (status === google.maps.GeocoderStatus.OK) 
+                                {
+                                    resultsMap.setCenter(results[0].geometry.location);
+                                    // Send geocoded location to 'addLocation' cache
+                                    
+                                    var marker = new google.maps.Marker(
+                                        {
+                                            map: resultsMap,
+                                            position: results[0].geometry.location
+                                        });
+                                } 
+                                else 
+                                {
+                                    alert('Uh oh! Geocoding failed because of the following error: ' + status);
+                                }
+                        });
+                        }
+                    </script>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&callback=initMap" async defer>
+                    </script>
+                </div>
             </div>
-          </main>    
-        </div>
-        
-    </body>
+        </main>
+    </div>
+
+</body>
+
 </html>
