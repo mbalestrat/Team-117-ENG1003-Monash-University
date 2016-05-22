@@ -9,3 +9,21 @@ function viewLocation(locationName) {
     And load the view location page.
     location.href = 'viewlocation.html';
 }
+
+//global variables
+var nickNameString = ""
+var high = []
+var low = []
+var condition =[]
+
+function nickNameStringUpdate(nickName) {
+    for (i = 0, i < locations.length, i++) {
+        nickNameString += nickName
+
+    }
+
+}
+
+
+
+function conditionSummaryImage()
