@@ -60,7 +60,7 @@ function LocationWeatherCache()
     };
     
     //------------------------------------------------------------------
-    // Returns the location object for a given index.
+    // Returns the location object for a given index. USE ON VIEW LOCATION PAGE & MAIN SCREEN
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) 
@@ -88,15 +88,15 @@ function LocationWeatherCache()
         newLoc.nick = nickname;
         newLoc.forecasts = {};
         
-        newLoc.forecasts["latitude,longitude,date"] = lookUp;
+        //newLoc.forecasts["latitude,longitude,date"] = lookUp;
         
         // Push the new location to the array
         locations.push(newLoc);
         index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        JSONnewLoc = toJSON(newLoc);
-        localStorage.setItem(APP_PREFIX + index, JSON.stringify(JSONnewLoc));
+        //JSONnewLoc = toJSON(newLoc);
+        localStorage.setItem(APP_PREFIX, 1);
         
         // Return index of added location
         return index;

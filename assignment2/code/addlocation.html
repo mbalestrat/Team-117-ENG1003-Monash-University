@@ -115,7 +115,7 @@
                   scaledSize: new google.maps.Size(25, 25)
                 };
 
-            // Create a marker for each place. <<<<<<< Should interface with addLocation
+            // Create a marker for each place. <<<<<<< HOW DO I GET THE POSITION OUT OF THIS?
             markers.push(new google.maps.Marker(
                 {
                   map: map,
@@ -125,7 +125,10 @@
                 }
             ));
               
-            LocationWeatherCache.addLocation(markers);
+            lat = JSON.parse(place.geometry.location.lat);
+            lat = place.geometry.location.lng;
+              
+            LocationWeatherCache.addLocation(lat, 0, 'Example');
                 
             if (place.geometry.viewport) 
             {
