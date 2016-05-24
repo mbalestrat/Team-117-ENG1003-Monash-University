@@ -27,6 +27,9 @@
             height: 100%;
         }
     </style>
+    <script src="js/locationWeatherCache.js"></script>
+        <script src="js/viewLocationPage.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initmap" async defer></script>
 </head>
 
 <body>
@@ -53,33 +56,58 @@
                     <div id="map"></div>
                     <!--   Main page content here:   -->
                     <script>
-            
                         var map;
 
                         function initMap() {
+                            // Create a map object and specify the DOM element for display.
                             var map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 8,
                                 center: {
                                     lat: -34.397,
                                     lng: 150.644
-                                },
-                                zoom: 8
+                                }
                             });
+
                             var geocoder = new google.maps.Geocoder();
-                            fieldValueChanged = function(){
-                                geocoderAddress(geocoder,map)
+                            fieldValueChanged = function () {
+                                geocoderAddress(geocoder, map);
+                            };
+                        }
+                    </script>
+                    <script>
+                        //The date that dispalyedd weather applies to
+                        // Returns a date in the format "YYYY-MM-DD".
+
+                        Date.prototype.simpleDateString = function () {
+                            function pad(value) {
+                                return ("0" + value).slice(-2);
                             }
+
+                            var dateString = this.getFullYear() + "-" +
+                                pad(this.getMonth() + 1, 2) + '-' +
+                                pad(this.getDate(), 2);
+
+                            return dateString;
+                        }
+                        var outputAreaRef = document.getElementById("locDate");
+                        var output = "";
+
+                        var currentDate = new Date();
+
+                        var dateStr = currentDate.simpleDateString()
+
+                        outputAreaRef.innerHTML = dateStr;
+
+                        //time zone errors
+                        Date.prototype.forcastDateString = function () {
+
+                            return this.simpleDateString() + "T12:00:00"
                         }
                     </script>
                 </div>
             </div>
         </main>
     </div>
-
-    <!--   JavaScript files:   -->
-    < script src="js/locationWeatherCache.js">
-        </script>
-        <script src="js/viewLocationPage.js"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.21&key=760b8e8a0a5f4992d672bcb53a07998e&callback=initMap"></script>
 </body>
 
 </html>

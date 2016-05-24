@@ -15,35 +15,6 @@ if (locationIndex !== null)
 }
 
 
-//The date that dispalyedd weather applies to
-// Returns a date in the format "YYYY-MM-DD".
-
-Date.prototype.simpleDateString = function() {
-    function pad(value)
-    {
-        return ("0" + value).slice(-2);
-    }
-
-    var dateString = this.getFullYear() + "-" + 
-            pad(this.getMonth() + 1, 2) + '-' + 
-            pad(this.getDate(), 2);
-    
-    return dateString;
-}
-var outputAreaRef = document.getElementById("locDate");
-var output = "";
-
-var currentDate = new Date();
-
-var dateStr = currentDate.simpleDateString()
-
-outputAreaRef.innerHTML = dateStr;
-
-//time zone errors
-Date.prototype.forcastDateString = function(){
-    
-    return this.simpleDateString() + "T12:00:00"
-}
 
 //Adate selection slider
 //30 positions
