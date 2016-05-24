@@ -29,12 +29,13 @@ Date.prototype.forecastDateString = function()
     return this.simpleDateString() + "T12:00:00";
 }
 
+
 //------------------------------------------------------------------
 
 // Code for LocationWeatherCache class and other shared code.
 // Global variable to count the number of removed items and offset the index of locations array.
 var spliceCount;
-var LocationWeatherCache;
+var locationWeatherCache;
 
 // Prefix to use for Local Storage.
 var APP_PREFIX = "weatherApp";
@@ -60,7 +61,7 @@ function LocationWeatherCache()
     };
     
     //------------------------------------------------------------------
-    // Returns the location object for a given index.
+    // Returns the location object for a given index. USE ON VIEW LOCATION PAGE & MAIN SCREEN
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) 
@@ -83,20 +84,20 @@ function LocationWeatherCache()
             };
             
         // Get weather for this location from Forecast.io
-        var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
+        //
         
         newLoc.nick = nickname;
         newLoc.forecasts = {};
         
-        newLoc.forecasts["latitude,longitude,date"] = lookUp;
+        // newLoc.forecasts["latitude,longitude,date"] = JSON.stringify(lookUp);
         
         // Push the new location to the array
         locations.push(newLoc);
         index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        JSONnewLoc = toJSON(newLoc);
-        localStorage.setItem(APP_PREFIX + index, JSON.stringify(JSONnewLoc));
+        //JSONnewLoc = toJSON(newLoc);
+        localStorage.setItem(APP_PREFIX, JSON.stringify(locations));
         
         // Return index of added location
         return index;
@@ -159,7 +160,7 @@ function LocationWeatherCache()
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) 
     {
-        
+        var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
         //Check if weather data point for date is already in forecasts array. (Use a search method)
         
             // If yes, call callback function with weather data.
@@ -246,7 +247,7 @@ function loadLocations()
 {
     // Create a single LocationWeatherCache class instance inside global variable 'LocationWeatherCache'.
     
-    LocationWeatherCache = new LocationWeatherCache();
+    locationWeatherCache = new LocationWeatherCache();
     
     // Check local storage for existing cache object
 

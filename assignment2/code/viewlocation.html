@@ -50,25 +50,22 @@
                     <p style="width:300px">
                         <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0">
                     </p>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submit" onclick="javascript:LocationWeatherCache.removeLocationAtIndex();">
+                          Remove This Location
+                        </button>
+                    <br>
                     <div id="map"></div>
                     
                     <!--   Main page content here:   -->
                     <script>
-            
                         var map;
-
-                        function initMap() {
+                        function initMap() 
+                        {
+                            // Create a map object and specify the DOM element for display.
                             var map = new google.maps.Map(document.getElementById('map'), {
-                                center: {
-                                    lat: -34.397,
-                                    lng: 150.644
-                                },
-                                zoom: 8
-                            });
-                            var geocoder = new google.maps.Geocoder();
-                            fieldValueChanged = function(){
-                                geocoderAddress(geocoder,map)
-                            }
+                            center: {lat: -34.397, lng: 150.644},
+                            zoom: 8
+                          });
                         }
                     </script>
                 </div>
