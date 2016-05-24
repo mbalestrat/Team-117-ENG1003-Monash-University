@@ -24,12 +24,12 @@
         }
         
         #map {
-            height: 100%;
+            height: 100px;
         }
     </style>
     <script src="js/locationWeatherCache.js"></script>
-        <script src="js/viewLocationPage.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initmap" async defer></script>
+    <script src="js/viewLocationPage.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initMap" async defer></script>
 </head>
 
 <body>
@@ -50,30 +50,14 @@
                     <span id="locDate"></span>
                     <!--   Main page content here:   -->
                     <!-- Slider with Starting Value -->
-                    <p style="width:300px">
+                    <p style="width:200px">
                         <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0">
                     </p>
+
+
                     <div id="map"></div>
-                    <!--   Main page content here:   -->
-                    <script>
-                        var map;
 
-                        function initMap() {
-                            // Create a map object and specify the DOM element for display.
-                            var map = new google.maps.Map(document.getElementById('map'), {
-                                zoom: 8,
-                                center: {
-                                    lat: -34.397,
-                                    lng: 150.644
-                                }
-                            });
-
-                            var geocoder = new google.maps.Geocoder();
-                            fieldValueChanged = function () {
-                                geocoderAddress(geocoder, map);
-                            };
-                        }
-                    </script>
+                    
                     <script>
                         //The date that dispalyedd weather applies to
                         // Returns a date in the format "YYYY-MM-DD".
