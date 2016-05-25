@@ -117,7 +117,8 @@
                 };
 
             // Create a marker for each place. <<<<<<< HOW DO I GET THE POSITION OUT OF THIS?
-            pos=place.geometry.location;
+            pos = place.geometry.location;
+            name = place.name;
               
             markers.push(new google.maps.Marker(
                 {
@@ -128,6 +129,7 @@
                 }
             ));
               
+            
             //lat = JSON.parse(place.geometry.location.lat);
             //lat = place.geometry.location.lng;
               
@@ -147,15 +149,20 @@
             //return markers.pop();
       }
         
+        nick = document.getElementById("nickname");
+        
     function savePosition()
         {
             console.log(pos.lat());
             console.log(pos.nickname);
-            
-            var nick = document.getElementById("nickname");
             console.log(nick);
             
-            locationWeatherCache.addLocation(pos.lat(),pos.lng(), nick);
+            //if (nick == null){
+                locationWeatherCache.addLocation(pos.lat(),pos.lng(), name);
+            //}
+            console.log(name);
+            
+            //locationWeatherCache.addLocation(pos.lat(),pos.lng(), nick);
         }
 
     </script>

@@ -75,7 +75,7 @@ function LocationWeatherCache()
     // new location into the cache.  It will have an empty 'forecasts'
     // property.  Returns the index of the added location.
     //
-    this.addLocation = function(latitude, longitude, nickname, date)
+    this.addLocation = function(latitude, longitude, nickname)
     {
         // Create the newLoc object 
         var newLoc = 
@@ -139,7 +139,7 @@ function LocationWeatherCache()
     //
     this.initialiseFromPDO = function(locationWeatherPDO) 
     {
-        locationWeatherCacheObj = JSON.parse(locationWeatherCachePDO);
+        locationWeatherCacheObj = JSON.parse(locationWeatherPDO);
         locations = locationWeatherCacheObj.locations;
     };
 
