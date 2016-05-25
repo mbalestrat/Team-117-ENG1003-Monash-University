@@ -1,7 +1,7 @@
 /*===============================================================================================================
 TEAM 117
 Assignment 2, ENG1003
-Last Edited: 21/05/2016
+Last Edited: 24/05/2016
 Written by Michelle Balestrat, 23838213
 ===============================================================================================================*/
 
@@ -76,20 +76,17 @@ function LocationWeatherCache()
     //
     this.addLocation = function(latitude, longitude, nickname, date)
     {
-        // Create the newLoc object
+        // Create the newLoc object 
         var newLoc = 
             { 
              lat: latitude, 
              long: longitude,
             };
             
-        // Get weather for this location from Forecast.io
-        //
+        // NB: Getting weather is the job of getWeatherAtIndexForDate function
         
         newLoc.nick = nickname;
         newLoc.forecasts = {};
-        
-        // newLoc.forecasts["latitude,longitude,date"] = JSON.stringify(lookUp);
         
         // Push the new location to the array
         locations.push(newLoc);
@@ -143,8 +140,10 @@ function LocationWeatherCache()
     //
     this.initialiseFromPDO = function(locationWeatherPDO) 
     {
-        locations = locationWeatherPDO.locations;
-		callbacks = locationWeatherPDO.callbacks;
+        locationWeatherCacheObj = JSON.parse(locationWeatherCachePDO);
+        locations = locationWeatherCacheObj.locations;
+        //locations = locationWeatherPDO.locations;
+		//callbacks = locationWeatherPDO.callbacks;
     };
 
     //------------------------------------------------------------------
@@ -160,13 +159,17 @@ function LocationWeatherCache()
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) 
     {
-        var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
+        
         //Check if weather data point for date is already in forecasts array. (Use a search method)
+        
         
             // If yes, call callback function with weather data.
         
             // If not, call forecast API with JSONP
+            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
+        
             // Store in forecasts array and return to callback function.
+            
     };
 
     //------------------------------------------------------------------
@@ -181,7 +184,6 @@ function LocationWeatherCache()
     {
         var index = getIndexByLatLng(response.lat,response.lng);
         locations[index].forecasts[key] = WObj;
-        
         
         saveLocations(locations);
         document.body.appendChild(script);
@@ -212,6 +214,7 @@ function LocationWeatherCache()
     {
         // Build URL parameters from data object.
         var params = "";
+        
         // For each key in data object...
         for (var key in data)
         {
@@ -235,6 +238,7 @@ function LocationWeatherCache()
                 params += encodedValue;
              }
         }
+        
         var script = document.createElement('script');
         script.src = url + params;
         document.body.appendChild(script);
