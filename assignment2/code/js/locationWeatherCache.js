@@ -34,7 +34,7 @@ Date.prototype.forecastDateString = function()
 
 // Code for LocationWeatherCache class and other shared code.
 // Global variable to count the number of removed items and offset the index of locations array.
-var spliceCount = 0;
+var spliceCount;
 var locationWeatherCache;
 var index = 0;
 
