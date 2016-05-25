@@ -3,7 +3,12 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+<<<<<<< HEAD
 var APP_PREFIX = "key1";
+=======
+var APP_PREFIX="weatherApp";
+
+>>>>>>> origin/master
 
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation");
 if (locationIndex !== null) {
@@ -27,6 +32,7 @@ Date.prototype.simpleDateString = function () {
 
     return dateString;
 }
+
 var outputAreaRef = document.getElementById("locDate");
 var output = "";
 

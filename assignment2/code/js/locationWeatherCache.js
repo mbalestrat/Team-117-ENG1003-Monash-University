@@ -1,7 +1,7 @@
 /*===============================================================================================================
 TEAM 117
 Assignment 2, ENG1003
-Last Edited: 21/05/2016
+Last Edited: 24/05/2016
 Written by Michelle Balestrat, 23838213
 ===============================================================================================================*/
 
@@ -29,12 +29,14 @@ Date.prototype.forecastDateString = function()
     return this.simpleDateString() + "T12:00:00";
 }
 
+
 //------------------------------------------------------------------
 
 // Code for LocationWeatherCache class and other shared code.
 // Global variable to count the number of removed items and offset the index of locations array.
 var spliceCount;
-var LocationWeatherCache;
+var locationWeatherCache;
+var index = 0;
 
 // Prefix to use for Local Storage.
 var APP_PREFIX = "weatherApp";
@@ -60,7 +62,7 @@ function LocationWeatherCache()
     };
     
     //------------------------------------------------------------------
-    // Returns the location object for a given index.
+    // Returns the location object for a given index. USE ON VIEW LOCATION PAGE & MAIN SCREEN
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) 
@@ -73,29 +75,25 @@ function LocationWeatherCache()
     // new location into the cache.  It will have an empty 'forecasts'
     // property.  Returns the index of the added location.
     //
-    this.addLocation = function(latitude, longitude, nickname, date)
+    this.addLocation = function(latitude, longitude, nickname)
     {
-        // Create the newLoc object
+        // Create the newLoc object 
         var newLoc = 
             { 
              lat: latitude, 
              long: longitude,
+             nick: nickname,
+             forecasts: {}
             };
             
-        // Get weather for this location from Forecast.io
-        var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
-        
-        newLoc.nick = nickname;
-        newLoc.forecasts = {};
-        
-        newLoc.forecasts["latitude,longitude,date"] = lookUp;
-        
-        // Push the new location to the array
+        // NB: Getting weather is the job of getWeatherAtIndexForDate function
         locations.push(newLoc);
-        index = locations.length - (spliceCount + 1);
+        // Push the new location to the array
+        index = locations.length - 1;
+        //index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        localStorage.setItem(APP_PREFIX + index, JSON.stringify(newLoc));
+        localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations[index]));
         
         // Return index of added location
         return index;
@@ -120,8 +118,8 @@ function LocationWeatherCache()
     {
         var locationWeatherPDO = 
             {
-            locations: locations,
-            callbacks: callbacks
+                locations: locations,
+                callbacks: callbacks
             };
         
 		return locationWeatherPDO;
@@ -129,10 +127,10 @@ function LocationWeatherCache()
     
     //------------------------------------------------------------------
     //Sets private attributes for a class instance. Lets LocalWeather be recreated on app relaunch.
-    this.initialiseFromJSON = function()
-    {
-        
-    };
+    //this.initialiseFromJSON = function()
+    //{
+    //    
+    //};
 
     //------------------------------------------------------------------
     // Given a public-data-only version of the class (such as from
@@ -141,8 +139,8 @@ function LocationWeatherCache()
     //
     this.initialiseFromPDO = function(locationWeatherPDO) 
     {
-        locations = locationWeatherPDO.locations;
-		callbacks = locationWeatherPDO.callbacks;
+        locationWeatherCacheObj = JSON.parse(locationWeatherPDO);
+        locations = locationWeatherCacheObj.locations;
     };
 
     //------------------------------------------------------------------
@@ -157,14 +155,28 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) 
-    {
+    {   
+        //index = Number(index);
+        var place = locations[index];
+        var key = place.lat + ',' + place.lng + ',' + date;
         
-        //Check if weather data point for date is already in forecasts array. (Use a search method)
-        
+        //Check if weather data point for date is already in forecasts array.
+        if (place.forecasts.hasOwnProperty(key)){
+            return callback(index, place.forecasts[key]);
+        }
+    
+        if (callbacks[key] == undefined)
+        {
             // If yes, call callback function with weather data.
-        
+            callbacks[key] = [callback, index];
+            
             // If not, call forecast API with JSONP
+            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, key);
+        }
+        
             // Store in forecasts array and return to callback function.
+            forecasts[index] = lookUp;
+            locations[index].forecasts["place.lat, place.lng, date"] = forecasts[index];
     };
 
     //------------------------------------------------------------------
@@ -177,12 +189,26 @@ function LocationWeatherCache()
 
     this.weatherResponse = function(response) 
     {
-        var index = getIndexByLatLng(response.lat,response.lng);
-        locations[index].forecasts[key] = WObj;
+        //var index = getIndexByLatLng(response.lat,response.lng);
+        //locations[index].forecasts[key] = weather;
         
+        var WeatherForecast = response.daily;
+        var date = new Date(WeatherForecast.data[0].time * 1000);
+        date = date.forcastDateString();
+        
+        var callbackIndex = response.lat + ',' + response.lng + ',' + date;
+        
+        var callback = callbacks[callbackIndex][0];
+        var index = callbacks[callbackIndex][1];
+        
+        delete callbacks[callbackIndex];
+        
+        locations[index].forecasts[callbackIndex] = WeatherForecast;
         
         saveLocations(locations);
         document.body.appendChild(script);
+        
+        callback(index, WeatherForecast);
     };
     
     //------------------------------------------------------------------
@@ -210,6 +236,7 @@ function LocationWeatherCache()
     {
         // Build URL parameters from data object.
         var params = "";
+        
         // For each key in data object...
         for (var key in data)
         {
@@ -233,6 +260,9 @@ function LocationWeatherCache()
                 params += encodedValue;
              }
         }
+        
+        params += "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse";
+        
         var script = document.createElement('script');
         script.src = url + params;
         document.body.appendChild(script);
@@ -245,10 +275,17 @@ function loadLocations()
 {
     // Create a single LocationWeatherCache class instance inside global variable 'LocationWeatherCache'.
     
-    LocationWeatherCache = new LocationWeatherCache();
+    locationWeatherCache = new LocationWeatherCache();
     
     // Check local storage for existing cache object
+<<<<<<< HEAD
     
+=======
+    if (locationWeatherCache != null)
+    {
+        locationWeatherCache.initialiseFromPDO(locationWeatherCache);
+    }
+>>>>>>> origin/master
 
 }
 //================================================================
@@ -256,7 +293,7 @@ function loadLocations()
 //
 function saveLocations(locs)
 {
-    localStorage.setItem(APP_PREFIX,locs);
+    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
 }
 
 //================================================================

@@ -5,7 +5,7 @@
     <title>Weather</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.purple-deep_purple.min.css">
     <script src="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="css/weatherapp.css" />
@@ -47,6 +47,7 @@
         <main class="mdl-layout__content">
             <div class="content-grid mdl-grid">
                 <div class="mdl-cell">
+<<<<<<< HEAD
                     <span id="locDate">Today:</span>
                     <input id="slide" type="range" min="1" max="60" step="2" value="1">
                     <div id="30"></div>
@@ -54,10 +55,49 @@
                     <button onclick="instance.removeLocationAtIndex(index);" class="mdl-button mdl-js-button mdl-button--raised">Remove Location </button>
 
 
+=======
+                    <span id="locDate"></span>
+                    <!--   Main page content here:   -->
+                    <!-- Slider with Starting Value -->
+                    <p style="width:300px">
+                        <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0">
+                    </p>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submit" onclick="javascript:locationWeatherCache.removeLocationAtIndex();">
+                          Remove This Location
+                        </button>
+                    <br>
+                    <div id="map"></div>
+                    
+                    <!--   Main page content here:   -->
+                    <script>
+                        var map;
+                        function initMap() 
+                        {
+                            // Create a map object and specify the DOM element for display.
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                            center: 
+                            {
+                                lat: -34.397, 
+                                lng: 150.644
+                            },
+                            zoom: 8
+                          });
+                        }
+                    </script>
+>>>>>>> origin/master
                 </div>
             </div>
         </main>
     </div>
+<<<<<<< HEAD
+=======
+
+    <!--   JavaScript files:   -->
+    < script src="js/locationWeatherCache.js">
+        </script>
+        <script src="js/viewLocationPage.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.21&key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&callback=initMap"></script>
+>>>>>>> origin/master
 </body>
 
 </html>
