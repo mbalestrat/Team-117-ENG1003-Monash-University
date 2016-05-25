@@ -82,19 +82,18 @@ function LocationWeatherCache()
             { 
              lat: latitude, 
              long: longitude,
+             nick: nickname,
+             forecasts: {}
             };
             
         // NB: Getting weather is the job of getWeatherAtIndexForDate function
-        
-        newLoc.nickname = nickname;
-        newLoc.forecasts = {};
-        
+        locations.push(newLoc);
         // Push the new location to the array
-        index = locations.push(newLoc) - 1;
+        index = locations.length - 1;
         //index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations));
+        localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations[index]));
         
         // Return index of added location
         return index;
@@ -128,10 +127,10 @@ function LocationWeatherCache()
     
     //------------------------------------------------------------------
     //Sets private attributes for a class instance. Lets LocalWeather be recreated on app relaunch.
-    this.initialiseFromJSON = function()
-    {
-        
-    };
+    //this.initialiseFromJSON = function()
+    //{
+    //    
+    //};
 
     //------------------------------------------------------------------
     // Given a public-data-only version of the class (such as from
@@ -142,8 +141,6 @@ function LocationWeatherCache()
     {
         locationWeatherCacheObj = JSON.parse(locationWeatherCachePDO);
         locations = locationWeatherCacheObj.locations;
-        //locations = locationWeatherPDO.locations;
-		//callbacks = locationWeatherPDO.callbacks;
     };
 
     //------------------------------------------------------------------
@@ -159,9 +156,9 @@ function LocationWeatherCache()
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) 
     {   
-        index = Number(index);
+        //index = Number(index);
         var place = locations[index];
-        var key = locations[index].lat + locations[index].lng + date;
+        var key = place.lat + ',' + place.lng + ',' + date;
         
         //Check if weather data point for date is already in forecasts array.
         if (place.forecasts.hasOwnProperty(key)){
@@ -174,12 +171,12 @@ function LocationWeatherCache()
             callbacks[key] = [callback, index];
             
             // If not, call forecast API with JSONP
-            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey + key + "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse", key);
+            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, key);
         }
         
             // Store in forecasts array and return to callback function.
             forecasts[index] = lookUp;
-            locations[index].forecasts["locations[index].lat, locations[index].long, date"] = forecasts[index];
+            locations[index].forecasts["place.lat, place.lng, date"] = forecasts[index];
     };
 
     //------------------------------------------------------------------
@@ -192,11 +189,26 @@ function LocationWeatherCache()
 
     this.weatherResponse = function(response) 
     {
-        var index = getIndexByLatLng(response.lat,response.lng);
-        locations[index].forecasts[key] = weather;
+        //var index = getIndexByLatLng(response.lat,response.lng);
+        //locations[index].forecasts[key] = weather;
+        
+        var WeatherForecast = response.daily;
+        var date = new Date(WeatherForecast.data[0].time * 1000);
+        date = date.forcastDateString();
+        
+        var callbackIndex = response.lat + ',' + response.lng + ',' + date;
+        
+        var callback = callbacks[callbackIndex][0];
+        var index = callbacks[callbackIndex][1];
+        
+        delete callbacks[callbackIndex];
+        
+        locations[index].forecasts[callbackIndex] = WeatherForecast;
         
         saveLocations(locations);
         document.body.appendChild(script);
+        
+        callback(index, WeatherForecast);
     };
     
     //------------------------------------------------------------------
@@ -249,6 +261,8 @@ function LocationWeatherCache()
              }
         }
         
+        params += "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse";
+        
         var script = document.createElement('script');
         script.src = url + params;
         document.body.appendChild(script);
@@ -264,6 +278,10 @@ function loadLocations()
     locationWeatherCache = new LocationWeatherCache();
     
     // Check local storage for existing cache object
+    if (locationWeatherCache != null)
+    {
+        cache.initialiseFromPDO(locationWeatherCache);
+    }
 
 }
 //================================================================
@@ -271,7 +289,7 @@ function loadLocations()
 //
 function saveLocations(locs)
 {
-    localStorage.setItem(APP_PREFIX,locs);
+    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
 }
 
 //================================================================
