@@ -280,7 +280,7 @@ function loadLocations()
     // Check local storage for existing cache object
     if (locationWeatherCache != null)
     {
-        cache.initialiseFromPDO(locationWeatherCache);
+        locationWeatherCache.initialiseFromPDO(locationWeatherCache);
     }
 
 }

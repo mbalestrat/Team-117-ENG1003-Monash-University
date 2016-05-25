@@ -149,8 +149,13 @@
         
     function savePosition()
         {
-            console.log(pos.lat())
-            locationWeatherCache.addLocation(pos.lat(),pos.lng(),document.getElementById("nickname"));
+            console.log(pos.lat());
+            console.log(pos.nickname);
+            
+            var nick = document.getElementById("nickname");
+            console.log(nick);
+            
+            locationWeatherCache.addLocation(pos.lat(),pos.lng(), nick);
         }
 
     </script>
