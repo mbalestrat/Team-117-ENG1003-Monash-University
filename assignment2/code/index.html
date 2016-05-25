@@ -80,21 +80,30 @@
     </div>
 
     <!--   JavaScript files:   -->
-    <script src="js/locationWeatherCache.js"></script>
-    <script src="js/mainPage.js"></script>
+    
     
     <script>
     // Build each location using 'for' loop
+    window.onload = function() {    
+        outputAreaRef = document.getElementById('locList');
+        output = '';
         
-        outputAreaRef = document.getElementbyID('loclist');
-        
-        /* for (i = 0; i < locations.length; i++)
+         for (i = 0; i < localStorage.length; i++)
             {
-                <span id = "head1">
+                data = localStorage.getItem(APP_PREFIX + i);
+                dataObj = JSON.parse(data);
+                locName = JSON.stringify(dataObj.nick);
+                //output += data;
+                
+                
+                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'viewlocation.html';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
             }
-        */
         
+        outputAreaRef.innerHTML = output;
+    }
     </script>
+    <script src="js/locationWeatherCache.js"></script>
+    <script src="js/mainPage.js"></script>
 </body>
 
 </html>

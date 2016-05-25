@@ -3,6 +3,7 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
+
 function viewLocation(locationName) {
     //Save the desired location to local storage
     localStorage.setItem(APP_PREFIX + "-selectedLocation", locationName);
@@ -10,7 +11,7 @@ function viewLocation(locationName) {
     location.href = 'viewlocation.html';
 }
 
-//global variables
+/*//global variables
 var nickNameString = ""
 var high = []
 var low = []
@@ -26,4 +27,4 @@ function nickNameStringUpdate(nickName) {
 
 
 
-function conditionSummaryImage()
+function conditionSummaryImage()*/
