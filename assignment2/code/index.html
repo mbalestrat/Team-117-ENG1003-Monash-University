@@ -30,6 +30,18 @@
         <main class="mdl-layout__content">
             <!--   Main page content here:   -->
             <ul class='mdl-list' id='locList'>
+                <br>
+                <br>
+                <br>
+                <!-- Load Scroller -->
+                <br>
+                <br>
+                <div class="mdl-grid" align = "center">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">Please wait while we load the latest weather...</div>
+                <br>
+                <br>
+                <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<!--
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line"  onclick="location.href = 'viewlocation.html';">
                     <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
                     <span class="mdl-list__item-primary-content">
@@ -62,6 +74,7 @@
                         <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
                         <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
                         
+-->
                         
                     
                     </span>
@@ -82,7 +95,7 @@
     <!--   JavaScript files:   -->
     
     
-    <script>
+<script>
     // Build each location using 'for' loop
     window.onload = function() {    
         outputAreaRef = document.getElementById('locList');
@@ -92,11 +105,12 @@
             {
                 data = localStorage.getItem(APP_PREFIX + i);
                 dataObj = JSON.parse(data);
-                locName = JSON.stringify(dataObj.nick);
+                rawName = JSON.stringify(dataObj.nick);
+                locName = rawName.split('"').join('');
                 //output += data;
                 
                 
-                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'viewlocation.html';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + locName + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
             }
         
         outputAreaRef.innerHTML = output;
