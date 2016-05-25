@@ -248,6 +248,7 @@ function loadLocations()
     LocationWeatherCache = new LocationWeatherCache();
     
     // Check local storage for existing cache object
+    
 
 }
 //================================================================

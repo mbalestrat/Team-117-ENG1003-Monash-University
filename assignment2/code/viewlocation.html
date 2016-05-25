@@ -24,12 +24,12 @@
         }
         
         #map {
-            height: 100px;
+            height: calc(100vh - 300px);
         }
     </style>
     <script src="js/locationWeatherCache.js"></script>
     <script src="js/viewLocationPage.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=locMap" async defer></script>
 </head>
 
 <body>
@@ -47,47 +47,13 @@
         <main class="mdl-layout__content">
             <div class="content-grid mdl-grid">
                 <div class="mdl-cell">
-                    <span id="locDate"></span>
-                    <!--   Main page content here:   -->
-                    <!-- Slider with Starting Value -->
-                    <p style="width:200px">
-                        <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0">
-                    </p>
-
-
+                    <span id="locDate">Today:</span>
+                    <input id="slide" type="range" min="1" max="60" step="2" value="1">
+                    <div id="30"></div>
                     <div id="map"></div>
+                    <button onclick="instance.removeLocationAtIndex(index);" class="mdl-button mdl-js-button mdl-button--raised">Remove Location </button>
 
-                    
-                    <script>
-                        //The date that dispalyedd weather applies to
-                        // Returns a date in the format "YYYY-MM-DD".
 
-                        Date.prototype.simpleDateString = function () {
-                            function pad(value) {
-                                return ("0" + value).slice(-2);
-                            }
-
-                            var dateString = this.getFullYear() + "-" +
-                                pad(this.getMonth() + 1, 2) + '-' +
-                                pad(this.getDate(), 2);
-
-                            return dateString;
-                        }
-                        var outputAreaRef = document.getElementById("locDate");
-                        var output = "";
-
-                        var currentDate = new Date();
-
-                        var dateStr = currentDate.simpleDateString()
-
-                        outputAreaRef.innerHTML = dateStr;
-
-                        //time zone errors
-                        Date.prototype.forcastDateString = function () {
-
-                            return this.simpleDateString() + "T12:00:00"
-                        }
-                    </script>
                 </div>
             </div>
         </main>
