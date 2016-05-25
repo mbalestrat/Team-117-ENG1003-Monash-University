@@ -36,6 +36,7 @@ Date.prototype.forecastDateString = function()
 // Global variable to count the number of removed items and offset the index of locations array.
 var spliceCount;
 var locationWeatherCache;
+var index = 0;
 
 // Prefix to use for Local Storage.
 var APP_PREFIX = "weatherApp";
@@ -85,16 +86,15 @@ function LocationWeatherCache()
             
         // NB: Getting weather is the job of getWeatherAtIndexForDate function
         
-        newLoc.nick = nickname;
+        newLoc.nickname = nickname;
         newLoc.forecasts = {};
         
         // Push the new location to the array
-        locations.push(newLoc);
-        index = locations.length - (spliceCount + 1);
+        index = locations.push(newLoc) - 1;
+        //index = locations.length - (spliceCount + 1);
         
         // Save to cache
-        //JSONnewLoc = toJSON(newLoc);
-        localStorage.setItem(APP_PREFIX, JSON.stringify(locations));
+        localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations));
         
         // Return index of added location
         return index;
@@ -158,18 +158,28 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(index, date, callback) 
-    {
+    {   
+        index = Number(index);
+        var place = locations[index];
+        var key = locations[index].lat + locations[index].lng + date;
         
-        //Check if weather data point for date is already in forecasts array. (Use a search method)
-        
-        
+        //Check if weather data point for date is already in forecasts array.
+        if (place.forecasts.hasOwnProperty(key)){
+            return callback(index, place.forecasts[key]);
+        }
+    
+        if (callbacks[key] == undefined)
+        {
             // If yes, call callback function with weather data.
-        
+            callbacks[key] = [callback, index];
+            
             // If not, call forecast API with JSONP
-            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey, newLoc);
+            var lookUp = jsonpRequest("https://api.forecast.io/forecast/" + APIkey + key + "/?exclude=[currently,minutely,hourly,alerts,flags]&callback=locationWeatherCache.weatherResponse", key);
+        }
         
             // Store in forecasts array and return to callback function.
-            
+            forecasts[index] = lookUp;
+            locations[index].forecasts["locations[index].lat, locations[index].long, date"] = forecasts[index];
     };
 
     //------------------------------------------------------------------
@@ -183,7 +193,7 @@ function LocationWeatherCache()
     this.weatherResponse = function(response) 
     {
         var index = getIndexByLatLng(response.lat,response.lng);
-        locations[index].forecasts[key] = WObj;
+        locations[index].forecasts[key] = weather;
         
         saveLocations(locations);
         document.body.appendChild(script);
