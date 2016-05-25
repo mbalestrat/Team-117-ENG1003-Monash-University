@@ -34,7 +34,7 @@ Date.prototype.forecastDateString = function()
 
 // Code for LocationWeatherCache class and other shared code.
 // Global variable to count the number of removed items and offset the index of locations array.
-var spliceCount;
+var spliceCount = 0;
 var locationWeatherCache;
 var index = 0;
 
@@ -90,7 +90,7 @@ function LocationWeatherCache()
         locations.push(newLoc);
         // Push the new location to the array
         index = locations.length - 1;
-        //index = locations.length - (spliceCount + 1);
+        //index = locations.length - (spliceCount - 1);
         
         // Save to cache
         localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations[index]));
@@ -104,9 +104,12 @@ function LocationWeatherCache()
     // 
     this.removeLocationAtIndex = function(index)
     {
-        localStorage.removeItem(APP_PREFIX + index);
-        locations.splice(index, 1);
-        spliceCount++;
+        if (index > -1)
+        {
+            localStorage.removeItem(APP_PREFIX + index);
+            locations.splice(index, 1);
+            spliceCount++;
+        }
     };
 
     //------------------------------------------------------------------
@@ -279,7 +282,7 @@ function loadLocations()
     
     // Check local storage for existing cache object
 
-    if (locationWeatherCache != null)
+    if (locationWeatherCache !== null)
     {
         locationWeatherCache.initialiseFromPDO(locationWeatherCache);
     }

@@ -104,13 +104,14 @@
          for (i = 0; i < localStorage.length; i++)
             {
                 data = localStorage.getItem(APP_PREFIX + i);
+                
+                if (data !== null){
                 dataObj = JSON.parse(data);
                 rawName = JSON.stringify(dataObj.nick);
                 locName = rawName.split('"').join('');
-                //output += data;
                 
-                
-                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + locName + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+                }
             }
         
         outputAreaRef.innerHTML = output;
