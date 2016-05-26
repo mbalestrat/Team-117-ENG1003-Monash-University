@@ -115,6 +115,14 @@
     // Get Weather for each location
     
     
+    //Current location GPS
+    navigator.geolocation.getCurrentPosition(function(location) 
+    {
+        console.log(location.coords.latitude);
+        console.log(location.coords.longitude);
+        console.log(location.coords.accuracy);
+    });
+    
     </script>
     <script src="js/locationWeatherCache.js"></script>
     <script src="js/mainPage.js"></script>
