@@ -94,6 +94,9 @@
         //date = new Date();
         //dateOut = date.forecastDateString;
         
+        //CURRENT LOCATION
+        output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(weatherAppcurrent)\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">Current Location</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+        
          for (i = 0; i < localStorage.length; i++)
             {
                 data = localStorage.getItem(APP_PREFIX + i);
@@ -112,16 +115,40 @@
         outputAreaRef.innerHTML = output;
     }
     
+    
+    
     // Get Weather for each location
     
     
-    //Current location GPS
-    navigator.geolocation.getCurrentPosition(function(location) 
+    //Display Current location GPS
+    addCurrent();
+    
+    function addCurrent()
     {
-        console.log(location.coords.latitude);
-        console.log(location.coords.longitude);
-        console.log(location.coords.accuracy);
-    });
+    var currentLat;
+    var currentLng;
+        
+        navigator.geolocation.getCurrentPosition(
+            function(location) 
+            {
+                currentLat = location.coords.latitude;
+                currentLng = location.coords.longitude;
+                console.log(location.coords.accuracy);
+            });
+    
+   
+        // Create the newLoc object 
+        var current = 
+            { 
+             lat: currentLat, 
+             long: currentLng,
+             nick: 'current location',
+             forecasts: {}
+            };
+        
+        // Save to cache
+        localStorage.setItem('current', JSON.stringify(current)); 
+    };
     
     </script>
     <script src="js/locationWeatherCache.js"></script>
