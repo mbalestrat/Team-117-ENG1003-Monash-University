@@ -36,7 +36,7 @@ Date.prototype.forecastDateString = function()
 // Global variable to count the number of removed items and offset the index of locations array.
 var spliceCount;
 var locationWeatherCache;
-var index = 0;
+//
 
 // Prefix to use for Local Storage.
 var APP_PREFIX = "weatherApp";
@@ -51,6 +51,7 @@ function LocationWeatherCache()
     var locations = [];
     var callbacks = {};
     var APIkey = "760b8e8a0a5f4992d672bcb53a07998e";
+    
 
     // Public methods:
     
@@ -88,15 +89,17 @@ function LocationWeatherCache()
             
         // NB: Getting weather is the job of getWeatherAtIndexForDate function
         locations.push(newLoc);
+        
         // Push the new location to the array
         index = locations.length - 1;
+        
         //index = locations.length - (spliceCount - 1);
         
         // Save to cache
         localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations[index]));
         
         // Return index of added location
-        return index;
+        return index
     };
 
     //------------------------------------------------------------------
@@ -162,6 +165,7 @@ function LocationWeatherCache()
         //index = Number(index);
         var place = locations[index];
         var key = place.lat + ',' + place.lng + ',' + date;
+        var forecast;
         
         //Check if weather data point for date is already in forecasts array.
         if (place.forecasts.hasOwnProperty(key)){
@@ -178,8 +182,8 @@ function LocationWeatherCache()
         }
         
             // Store in forecasts array and return to callback function.
-            forecasts[index] = lookUp;
-            locations[index].forecasts["place.lat, place.lng, date"] = forecasts[index];
+            forecast.push(lookUp);
+            locations[index].forecasts["place.lat, place.lng, date"] = forecast[index];
     };
 
     //------------------------------------------------------------------
@@ -213,6 +217,10 @@ function LocationWeatherCache()
         
         callback(index, WeatherForecast);
     };
+    
+     this.getWeather = function(index, locations){
+        locations[i].forecasts.push(jsonpRequest())
+    }
     
     //------------------------------------------------------------------
     // Private methods:
@@ -292,13 +300,14 @@ function loadLocations()
 //================================================================
 // Save the singleton locationWeatherCache to Local Storage.
 //
-//function saveLocations(locs)
-//{
-//    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
-//}
+function saveLocations()
+{
+    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
+}
 
 //================================================================
 // Call loadLocations function so that stored data is available on all pages.
 
+saveLocations();
 loadLocations();
 

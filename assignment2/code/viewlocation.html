@@ -72,11 +72,14 @@
                         function initMap() 
                         {
                             // Create a map object and specify the DOM element for display.
+                            weather = localStorage.getItem('weatherApp-selectedLocation');
+                            weatherObj = JSON.parse(weather);
+                            
                             var map = new google.maps.Map(document.getElementById('map'), {
                             center: 
                             {
-                                lat: -34.397, 
-                                lng: 150.644,
+                                lat: -34.397, //replace with weatherObj.lat;
+                                lng: 150.644, // weatherObj.lng;
                                 zoom: 8
                             },
                           });

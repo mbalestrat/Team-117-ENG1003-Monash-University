@@ -21,7 +21,7 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title" id="headerBarTitle">Locations</span>
                 <div class="mdl-layout-spacer"></div>
-                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">
+                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect" >
                     <i class="material-icons">add</i>
                 </button>
             </div>
@@ -30,9 +30,6 @@
         <main class="mdl-layout__content">
             <!--   Main page content here:   -->
             <ul class='mdl-list' id='locList'>
-<<<<<<< HEAD
-                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line" onclick="location.href = 'viewlocation.html';">
-=======
                 <br>
                 <br>
                 <br>
@@ -46,16 +43,15 @@
                 <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <!--
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line"  onclick="location.href = 'viewlocation.html';">
->>>>>>> origin/master
                     <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
                     <span class="mdl-list__item-primary-content">
                 
                         <span id = "head1">LOCATION 1</span> 
                         <span id="low 0" class="mdl-list__item-sub-title">Low &deg;C:</span>
-                    <span id="high 0" class="mdl-list__item-sub-title">High &deg;C:</span>
-                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-
-
+                        <span id="high 0" class="mdl-list__item-sub-title">High &deg;C:</span>
+                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+                        
+                    
                     </span>
                 </li>
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
@@ -64,9 +60,9 @@
                         
                         LOCATION 2
                         <span id="low 1" class="mdl-list__item-sub-title">Low &deg;C:</span>
-                    <span id="high 1" class="mdl-list__item-sub-title">High &deg;C:</span>
-                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-
+                        <span id="high 1" class="mdl-list__item-sub-title">High &deg;C:</span>
+                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+                    
                     </span>
                 </li>
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
@@ -75,23 +71,12 @@
                         LOCATION 3 
                         
                         <span id="low 2" class="mdl-list__item-sub-title">Low &deg;C:</span>
-<<<<<<< HEAD
-                    <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
-                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-                    <!-- MDL Spinner Component with Single Color -->
-                        <div id="prog1" style="width:250px" class="mdl-js-progress"></div>
-                    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
-
-
-
-=======
                         <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
                         <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
                         
 -->
                         
                     
->>>>>>> origin/master
                     </span>
                 </li>
             </ul>
@@ -120,8 +105,8 @@
                 dataObj = JSON.parse(data);
                 rawName = JSON.stringify(dataObj.nick);
                 locName = rawName.split('"').join('');
-                //dataObj.forecasts["1"] = locationWeatherCache.getWeatherAtIndexForDate(i, , locationWeatherCache.weatherResponse());
-                //localStorage.addItem(JSON.stringify(dataObj);    
+                //console.log(locationWeatherCache.getWeatherAtIndexForDate(i, 'date', locationWeatherCache.weatherResponse()));
+                //localStorage.addItem(JSON.stringify(dataObj); 
                 
                 output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
                 }
