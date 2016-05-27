@@ -21,7 +21,7 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title" id="headerBarTitle">Locations</span>
                 <div class="mdl-layout-spacer"></div>
-                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect" >
+                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">
                     <i class="material-icons">add</i>
                 </button>
             </div>
@@ -30,16 +30,16 @@
         <main class="mdl-layout__content">
             <!--   Main page content here:   -->
             <ul class='mdl-list' id='locList'>
-                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line"  onclick="location.href = 'viewlocation.html';">
+                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line" onclick="location.href = 'viewlocation.html';">
                     <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
                     <span class="mdl-list__item-primary-content">
                 
                         LOCATION 1 
                         <span id="low 0" class="mdl-list__item-sub-title">Low &deg;C:</span>
-                        <span id="high 0" class="mdl-list__item-sub-title">High &deg;C:</span>
-                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-                        
-                    
+                    <span id="high 0" class="mdl-list__item-sub-title">High &deg;C:</span>
+                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+
+
                     </span>
                 </li>
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
@@ -48,9 +48,9 @@
                         
                         LOCATION 2
                         <span id="low 1" class="mdl-list__item-sub-title">Low &deg;C:</span>
-                        <span id="high 1" class="mdl-list__item-sub-title">High &deg;C:</span>
-                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-                    
+                    <span id="high 1" class="mdl-list__item-sub-title">High &deg;C:</span>
+                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+
                     </span>
                 </li>
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
@@ -59,11 +59,14 @@
                         LOCATION 3 
                         
                         <span id="low 2" class="mdl-list__item-sub-title">Low &deg;C:</span>
-                        <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
-                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
-                        
-                        
-                    
+                    <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
+                    <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+                    <!-- MDL Spinner Component with Single Color -->
+                        <div id="prog1" style="width:250px" class="mdl-js-progress"></div>
+                    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+
+
+
                     </span>
                 </li>
             </ul>
