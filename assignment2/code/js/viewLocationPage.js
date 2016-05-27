@@ -3,12 +3,10 @@
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
-<<<<<<< HEAD
-var APP_PREFIX = "key1";
-=======
+
+
 var APP_PREFIX="weatherApp";
 
->>>>>>> origin/master
 
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation");
 if (locationIndex !== null) {
@@ -72,7 +70,7 @@ function locMap() {
 //Adate selection slider
 //30 positions
 //set to the far right
-var slide = document.getElementById('slideDate'),
+var slide = document.getElementById('slide'),
     sliderDate = new Date;
 
 slide.onchange = function() {

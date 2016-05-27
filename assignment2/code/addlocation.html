@@ -15,8 +15,8 @@
     <link rel="apple-touch-icon-precomposed" href="images/icon.png" />
     <script src="js/locationWeatherCache.js">
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initAutocomplete"
-         async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAarudkUpoo_sjt1ljL0mjW242GloOk8kk&libraries=places&callback=initAutocomplete" async defer 
+    </script>
     </script>
 
 </head>
@@ -35,8 +35,6 @@
             <div class="content-grid mdl-grid">
                 <div class="mdl-cell">
                     <!--   Main page content here:   -->
-
-
                     <!--<form name="addLocation" method="POST" action="geocodingSandbox.html" commandName="location" onsubmit="changeAdress()">-->
                     <div align = "center">   
                         <br>
@@ -55,7 +53,16 @@
                         <br>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submit" onclick="savePosition()">
                           Save Location
+                        </button> 
+                        <br><br>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submitGPS" onclick="addCurrentLocation()">
+                          Use Current Location
                         </button>
+                        
+                        <div id="confirmation" class="mdl-js-snackbar mdl-snackbar">
+                        <div class="mdl-snackbar__text"></div>
+                        <button class="mdl-snackbar__action" type="button"></button>
+                        </div>
 
                     <br>
                     <br>
@@ -63,7 +70,8 @@
                     
     <script>
         var pos;
-    function initAutocomplete() 
+        
+        function initAutocomplete() 
         {
                 var map = new google.maps.Map(document.getElementById('map'), 
                 {
@@ -116,7 +124,7 @@
                   scaledSize: new google.maps.Size(25, 25)
                 };
 
-            // Create a marker for each place. <<<<<<< HOW DO I GET THE POSITION OUT OF THIS?
+            // Create a marker for each place.
             pos = place.geometry.location;
             name = place.name;
               
@@ -129,11 +137,6 @@
                 }
             ));
               
-            
-            //lat = JSON.parse(place.geometry.location.lat);
-            //lat = place.geometry.location.lng;
-              
-            //LocationWeatherCache.addLocation(lat, 0, 'Example');
                 
             if (place.geometry.viewport) 
             {
@@ -150,23 +153,80 @@
       }
         
         nick = document.getElementById("nickname");
+        locationVal = document.getElementById("pac-input");
         
     function savePosition()
         {
-            console.log(pos.lat());
-            console.log(pos.nickname);
-            console.log(nick);
-            
-            //if (nick == null){
-                locationWeatherCache.addLocation(pos.lat(),pos.lng(), name);
-            //}
-            console.log(name);
-            
-            //locationWeatherCache.addLocation(pos.lat(),pos.lng(), nick);
+            nickname = nick.value;
+            if (nickname == '')
+                {
+                    locationWeatherCache.addLocation(pos.lat(),pos.lng(), name);
+            } else {
+                    locationWeatherCache.addLocation(pos.lat(),pos.lng(), nickname);
+                }
+            loc = locationVal.value;
+            if (locationVal == '' || locationVal == null){
+                //Throw error
+            }
+            else
+            {
+                //Proceed
+                location.href = 'index.html';
+            }
         }
+        
+        // Script for popup confirmation
+    (function() 
+     {
+      'use strict';
+      var snackbarContainer = document.querySelector('#confirmation');
+      var showToastButton_Fail = document.querySelector('#submitGPS');
+      var showToastButtonForManual_Fail = document.querySelector('#submit');
+        
+      showToastButton_Fail.addEventListener('click', function() 
+        {
+            'use strict';
+            var data = {message: 'Please enter a name for the current location.'};
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        });
+        
+      showToastButtonForManual_Fail.addEventListener('click', function() 
+        {
+            'use strict';
+            var data = {message: 'Error: Please enter a location!'};
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        });
+        
+    }());
+                
+        //Watch GPS location
+        var currentLat;
+        var currentLng;
+        
+        navigator.geolocation.getCurrentPosition(
+            function(location) 
+            {
+                currentLat = location.coords.latitude;
+                currentLng = location.coords.longitude;
+                console.log(location.coords.accuracy);
+            });
+        
+        //Add GPS location
+        function addCurrentLocation()
+        {
+            nickname = nick.value;
+            if (nickname == '')
+                {
+                    //Force user to add nickname for current location.
+            } else {
+                    locationWeatherCache.addLocation(currentLat, currentLng, nickname);
+                    location.href = 'index.html';
+                }
+            
+        }
+     console.log(navigator.geolocation.getCurrentPosition());
 
     </script>
-  
                     </div>     
                 </div>
             </div>

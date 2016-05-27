@@ -90,7 +90,7 @@ function LocationWeatherCache()
         locations.push(newLoc);
         // Push the new location to the array
         index = locations.length - 1;
-        //index = locations.length - (spliceCount + 1);
+        //index = locations.length - (spliceCount - 1);
         
         // Save to cache
         localStorage.setItem(APP_PREFIX + index, JSON.stringify(locations[index]));
@@ -104,9 +104,12 @@ function LocationWeatherCache()
     // 
     this.removeLocationAtIndex = function(index)
     {
-        localStorage.removeItem(APP_PREFIX + index);
-        locations.splice(index, 1);
-        spliceCount++;
+        if (index > -1)
+        {
+            localStorage.removeItem(APP_PREFIX + index);
+            locations.splice(index, 1);
+            spliceCount++;
+        }
     };
 
     //------------------------------------------------------------------
@@ -278,23 +281,21 @@ function loadLocations()
     locationWeatherCache = new LocationWeatherCache();
     
     // Check local storage for existing cache object
-<<<<<<< HEAD
-    
-=======
-    if (locationWeatherCache != null)
+
+    if (locationWeatherCache !== null)
     {
         locationWeatherCache.initialiseFromPDO(locationWeatherCache);
     }
->>>>>>> origin/master
+
 
 }
 //================================================================
 // Save the singleton locationWeatherCache to Local Storage.
 //
-function saveLocations(locs)
-{
-    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
-}
+//function saveLocations(locs)
+//{
+//    localStorage.setItem(APP_PREFIX + '_persistent', JSON.stringify(locationWeatherCache));
+//}
 
 //================================================================
 // Call loadLocations function so that stored data is available on all pages.
