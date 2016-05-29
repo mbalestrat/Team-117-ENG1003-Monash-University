@@ -52,7 +52,7 @@ function viewPageWeatherResponse(index, response) // the weather obj
 
     //Get the summary
     var weatherInfo = JSON.stringify(weatherInfoRaw.data[0].summary);
-    var summary = weatherInfo.split('"').join('');
+    var summary = weatherInfo.split('"').join(''); // Remove commas which cause errors.
 
     //Get the Lo Temps
     var loTemp = JSON.stringify(weatherInfoRaw.data[0].apparentTemperatureMin);
@@ -84,14 +84,17 @@ function viewPageWeatherResponse(index, response) // the weather obj
 
 
 //Header Bar
-if (chosenLocation !== null) {
-    document.getElementById("headerBarTitle").textContent = loc;
+if (chosenLocation == "current") {
+    document.getElementById("headerBarTitle").textContent = 'Current Location';
 } else {
-    var locationNames = ["Location A", "Location B"];
-    // If a location name was specified, use it for header bar title.
-    document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
+    if (chosenLocation !== null) {
+        document.getElementById("headerBarTitle").textContent = loc;
+    } else {
+        var locationNames = ["Location A", "Location B"];
+        // If a location name was specified, use it for header bar title.
+        document.getElementById("headerBarTitle").textContent = locationNames[locationIndex];
+    }
 }
-
 //The date that dispalyedd weather applies to
 // Returns a date in the format "YYYY-MM-DD".
 
