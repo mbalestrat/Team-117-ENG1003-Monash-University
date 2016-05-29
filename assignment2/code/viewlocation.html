@@ -46,55 +46,48 @@
 
         <main class="mdl-layout__content">
             <div class="content-grid mdl-grid">
-                <div class="mdl-cell" align="center">
+                <div class="mdl-cell" align = "center">
 
                     <span id="locDate"></span>
-                    <input id="slide" class="mdl-slider mdl-js-slider" type="range" min="-30" max="0" step="1" value="0" oninput="javascript: slideChange()">
+                    <input id="slide" class="mdl-slider mdl-js-slider" type="range" min="1" max="30" step="2" value="30">
                     <div id="30"></div>
-
                     <div id="map"></div>
 
-                    <!--<span id="locDate"></span>
-                       Main page content here:   -->
-                    <!-- Slider with Starting Value 
+                    <span id="locDate"></span>
+                    <!--   Main page content here:   -->
+                    <!-- Slider with Starting Value -->
                     <p style="width:300px">
                     
-                    </p>-->
-                    <br>
-                    <br>
-                    <div id="summary"></div>
-
-                    <br>
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="submit" onclick="javascript:locationWeatherCache.removeLocationAtIndex(index);">
-                        Remove This Location
-                    </button>
+                    </p>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id= "submit" onclick="javascript:locationWeatherCache.removeLocationAtIndex(index);">
+                          Remove This Location
+                        </button>
                     <br>
                 </div>
             </div>
         </main>
     </div>
-    <script>
-        var map;
-
-        function initMap() {
-            // Create a map object and specify the DOM element for display.
-            weather = localStorage.getItem('weatherApp-selectedLocation');
-            weatherObj = JSON.parse(weather);
-
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {
-                    lat: -34.397, //replace with weatherObj.lat;
-                    lng: 150.644, // weatherObj.lng;
-                    zoom: 8
-                },
-            });
-        }
-    </script>
+                    <script>
+                        var map;
+                        function initMap() 
+                        {
+                            // Create a map object and specify the DOM element for display.
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                            center: 
+                            {
+                                lat: -34.397, 
+                                lng: 150.644,
+                                zoom: 8
+                            },
+                          });
+                        }
+                        
+                    </script>
 
     <!--   JavaScript files:   -->
     < script src="js/locationWeatherCache.js">
         </script>
-        <script src="js/viewLocationPage.js"></script>
+    <script src="js/viewLocationPage.js"></script>
 </body>
 
 </html>

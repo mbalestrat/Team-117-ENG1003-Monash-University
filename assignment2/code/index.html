@@ -21,7 +21,7 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title" id="headerBarTitle">Locations</span>
                 <div class="mdl-layout-spacer"></div>
-                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect">
+                <button onclick="location.href = 'addlocation.html';" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored mdl-js-ripple-effect" >
                     <i class="material-icons">add</i>
                 </button>
             </div>
@@ -36,13 +36,12 @@
                 <!-- Load Scroller -->
                 <br>
                 <br>
-                <div class="mdl-grid" align="center">
-                    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">Please wait while we load the latest weather...</div>
-                    <br>
-                    <br>
-                    <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-
-                    <!-- LOCATION TEMPLATE
+                <div class="mdl-grid" align = "center">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">Please wait while we load the latest weather...</div>
+                <br>
+                <br>
+                <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<!--
                 <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line"  onclick="location.href = 'viewlocation.html';">
                     <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
                     <span class="mdl-list__item-primary-content">
@@ -52,19 +51,108 @@
                         <span id="high 0" class="mdl-list__item-sub-title">High &deg;C:</span>
                         <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
                         
---->
-
+                    
                     </span>
-                    </li>
+                </li>
+                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
+                    <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
+                    <span class="mdl-list__item-primary-content">
+                        
+                        LOCATION 2
+                        <span id="low 1" class="mdl-list__item-sub-title">Low &deg;C:</span>
+                        <span id="high 1" class="mdl-list__item-sub-title">High &deg;C:</span>
+                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+                    
+                    </span>
+                </li>
+                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--three-line" onclick="location.href = 'viewlocation.html';">
+                    <img class="mdl-list__item-icon" id="icon0" src="images/loading.png" class="list-avatar" />
+                    <span class="mdl-list__item-primary-content">
+                        LOCATION 3 
+                        
+                        <span id="low 2" class="mdl-list__item-sub-title">Low &deg;C:</span>
+                        <span id="high 2" class="mdl-list__item-sub-title">High &deg;C:</span>
+                        <span id="condition 0" class="mdl-list__item-sub-title">Condition: </span>
+                        
+-->
+                        
+                    
+                    </span>
+                </li>
             </ul>
         </main>
-        </div>
+    </div>
 
-        <!--   JavaScript files:   -->
-
-
-        <script src="js/locationWeatherCache.js"></script>
-        <script src="js/mainPage.js"></script>
+    <!--   JavaScript files:   -->
+    
+    
+<script>
+    // Build each location using 'for' loop
+    window.onload = function() {    
+        outputAreaRef = document.getElementById('locList');
+        output = '';
+        //date = new Date();
+        //dateOut = date.forecastDateString;
+        
+        //CURRENT LOCATION
+        output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(weatherAppcurrent)\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">Current Location</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+        
+         for (i = 0; i < localStorage.length; i++)
+            {
+                data = localStorage.getItem(APP_PREFIX + i);
+                
+                if (data !== null){
+                dataObj = JSON.parse(data);
+                rawName = JSON.stringify(dataObj.nick);
+                locName = rawName.split('"').join('');
+                //dataObj.forecasts["1"] = locationWeatherCache.getWeatherAtIndexForDate(i, , locationWeatherCache.weatherResponse());
+                //localStorage.addItem(JSON.stringify(dataObj);    
+                
+                output += "<li class=\"mdl-list__item mdl-list__item--two-line mdl-list__item--three-line mdl-list__item--four-line\"  onclick=\"location.href = 'javascript:viewLocation(" + i + ")\';\"><img class=\"mdl-list__item-icon\" id=\"icon0\" src=\"images/loading.png\" class=\"list-avatar\" /><span class=\"mdl-list__item-primary-content\"><span id = \"head1\">" + locName + "</span><span id=\"low 0\" class=\"mdl-list__item-sub-title\">Low &deg;C:</span><span id=\"high 0\" class=\"mdl-list__item-sub-title\">High &deg;C:</span><span id=\"condition 0\" class=\"mdl-list__item-sub-title\">Condition: </span>"
+                }
+            }
+        
+        outputAreaRef.innerHTML = output;
+    }
+    
+    
+    
+    // Get Weather for each location
+    
+    
+    //Display Current location GPS
+    addCurrent();
+    
+    function addCurrent()
+    {
+    var currentLat;
+    var currentLng;
+        
+        navigator.geolocation.getCurrentPosition(
+            function(location) 
+            {
+                currentLat = location.coords.latitude;
+                currentLng = location.coords.longitude;
+                console.log(location.coords.accuracy);
+            });
+    
+   
+        // Create the newLoc object 
+        var current = 
+            { 
+             lat: currentLat, 
+             long: currentLng,
+             nick: 'current location',
+             forecasts: {}
+            };
+        
+        // Save to cache
+        localStorage.setItem('current', JSON.stringify(current)); 
+    };
+    
+    </script>
+    <script src="js/locationWeatherCache.js"></script>
+    <script src="js/mainPage.js"></script>
 </body>
 
 </html>

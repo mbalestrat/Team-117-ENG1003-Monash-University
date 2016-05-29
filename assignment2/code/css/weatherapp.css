@@ -3,7 +3,9 @@ html, body {
     margin: 0; 
     padding: 0; 
 }
-
+<<<<<<< HEAD
+=======
 #map { 
     height: calc(100vh - 320px); 
 }
+>>>>>>> origin/master
